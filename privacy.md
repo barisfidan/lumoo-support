@@ -1,6 +1,6 @@
 # Lumoo Gizlilik Politikası
 
-**Son güncelleme: 3 Mayıs 2026**
+**Son güncelleme: 11 Mayıs 2026**
 
 Bu gizlilik politikası, Lumoo uygulamasının ("Lumoo", "biz") topladığı verileri, nasıl kullandığını ve haklarını açıklar.
 
@@ -8,6 +8,7 @@ Bu gizlilik politikası, Lumoo uygulamasının ("Lumoo", "biz") topladığı ver
 
 ### Hesap bilgileri
 - **E-posta adresi**: kayıt ve giriş için. Sunucumuzda kullanıcı kimliğine bağlı şekilde saklanır.
+- **Şifre**: bcrypt ile geri döndürülemez şekilde hash'lenir. Düz metin saklanmaz.
 
 ### Sağlık ve bebek bilgileri
 - Bebeğin adı, doğum tarihi, cinsiyeti, doğum kilosu, anne adı, mascot tercihi
@@ -17,33 +18,49 @@ Bu gizlilik politikası, Lumoo uygulamasının ("Lumoo", "biz") topladığı ver
 - Büyüme ölçümleri (boy, kilo, baş çevresi)
 - Bebek check-up notları
 
-Bu veriler cihazında **AES-256-GCM** ile şifrelenerek saklanır. Bulut yedekleme aktifse aynı şifreli haliyle sunucumuzda yedeklenir.
+Bu veriler cihazında **AES-256-GCM** ile şifrelenerek saklanır. Sunucumuza giden bebek profili alanları da ayrıca AES-256-GCM ile şifrelenir.
 
-### Kullanıcı içeriği
-- Lumoo'ya Sor (AI chat) içinde yazdığın mesajlar — sunucumuza gönderilir, AI yanıtı için Anthropic Claude API'sine iletilir, sonuç sana döner. Yazılı içeriğin yapay zeka eğitimi için kullanılmaz.
+### Kullanıcı içeriği (Lumoo'ya Sor — AI sohbet)
+"Lumoo'ya Sor" sekmesinde yazdığın mesajların metni, sunucumuza gönderilir ve oradan AI yanıtı üretilmesi için **Anthropic, PBC** (Claude API) servisine iletilir.
 
-### Cihaz tanımlayıcısı
-- Reklam SDK'sı (Google AdMob), reklam gösterimi için cihaz tanımlayıcısını alır. Ücretsiz kullanıcılar için geçerli; Premium abone bu veriyi paylaşmaz.
+**Gönderilen:** Yalnızca yazdığın mesajın metni.
+
+**Gönderilmeyen:** Adın, e-posta adresin, bebek profili (ad, doğum tarihi, kilo vb.), beslenme/pompa kayıtların, cihaz tanımlayıcı (IDFA/IDFV), konum.
+
+**Onay:** Bu özelliği ilk kez kullandığında uygulama içinde bir izin ekranı görürsün. Kabul etmeden hiçbir mesaj gönderilmez. Reddedersen sadece bu özellik devre dışı kalır; uygulamanın diğer bölümleri çalışır.
+
+**Veri yaşam döngüsü:** Anthropic, API üzerinden gelen veriyi varsayılan olarak model eğitiminde kullanmaz ve 30 gün içinde siler.
+
+### Reklamlar (yalnızca ücretsiz katmanda)
+Lumoo, reklam gösterimi için **cihaz tanımlayıcısı (IDFA) kullanmaz**. Tüm AdMob reklam talepleri **kişiselleştirilmemiş (non-personalized)** olarak yapılır:
+
+- Davranışsal hedefleme yapılmaz
+- Kullanıcı profili oluşturulmaz
+- Çapraz uygulama takibi yapılmaz
+- iOS App Tracking Transparency (ATT) izin ekranı **gösterilmez** çünkü takip işlemi gerçekleşmez
+
+Google'a yalnızca temel teknik bilgi iletilir (yaklaşık konum, cihaz dili, reklam yerleştirme ID'si). Premium abonelerde reklam tamamen kapalıdır.
 
 ### Satın alma geçmişi
-- Premium aboneliğin durumu (aktif / iptal / yenileme tarihi). Apple App Store ve RevenueCat üzerinden alınır.
+- Premium aboneliğin durumu (aktif / iptal / yenileme tarihi). Apple App Store ve RevenueCat üzerinden alınır. Apple ID veya kart bilgilerin **hiçbir zaman Lumoo'ya iletilmez**.
 
 ## Verilerini nasıl kullanırız
 
-- **Uygulama işlevi**: Bebek bakım takibinin sürdürülmesi, AI yanıtların kişiselleştirilmesi, abonelik yönetimi.
-- **Reklam (sadece ücretsiz katmanda)**: AdMob aracılığıyla cihaz tanımlayıcısı reklam gösterimi için kullanılır.
+- **Uygulama işlevi**: Bebek bakım takibinin sürdürülmesi, Lumoo'ya Sor (AI sohbet) yanıtlarının üretilmesi, abonelik yönetimi.
+- **Reklam (sadece ücretsiz katmanda)**: AdMob aracılığıyla kişiselleştirilmemiş reklam gösterimi.
 - **Yasal yükümlülükler**: Hukuki taleplere yanıt vermek için minimum gereken kadar.
 
 ## Üçüncü taraflarla paylaşım
 
-Sağlık ve hesap verilerini **asla** üçüncü taraflarla paylaşmayız, satmayız.
+Sağlık ve hesap verilerini reklam ortaklarıyla veya veri brokerlarıyla **asla paylaşmayız, satmayız**.
 
-İşlem için kullandığımız servisler:
-- **Anthropic** (Claude API): Lumoo'ya Sor mesajların AI yanıtı için işlenir, eğitime girmez.
-- **Apple StoreKit**: ödeme işlemleri Apple tarafından yönetilir, biz ödeme bilgilerini görmeyiz.
-- **RevenueCat**: abonelik durumu yönetimi.
-- **Google AdMob** (sadece ücretsiz katman): reklam gösterimi.
-- **DigitalOcean**: sunucu altyapısı.
+Aşağıdaki üçüncü taraf hizmetleri kullanılır. Her biri kendi gizlilik politikası altında Lumoo'nun standartlarına **eşdeğer veri koruma taahhüdü** verir:
+
+- **Anthropic, PBC** (Claude API): Lumoo'ya Sor mesaj metni AI yanıtı için işlenir. Eğitim için kullanılmaz, 30 gün içinde silinir. [Gizlilik Politikası](https://www.anthropic.com/legal/privacy)
+- **Apple StoreKit**: Ödeme işlemleri Apple tarafından yönetilir; biz kart bilgilerini görmeyiz. [Apple Gizlilik](https://www.apple.com/privacy/)
+- **RevenueCat**: Abonelik durumu yönetimi. [RevenueCat Gizlilik](https://www.revenuecat.com/privacy/)
+- **Google AdMob** (sadece ücretsiz katman): Kişiselleştirilmemiş reklam gösterimi. [AdMob Gizlilik](https://policies.google.com/technologies/partner-sites)
+- **DigitalOcean**: Sunucu altyapısı (AB/ABD veri merkezi). [DigitalOcean Gizlilik](https://www.digitalocean.com/legal/privacy-policy)
 
 ## Haklarn
 
@@ -52,7 +69,7 @@ KVKK ve GDPR uyumlu:
 - **Erişim ve dışa aktarma**: Profil → Veri Dışa Aktar üzerinden tüm verilerini PDF olarak indirebilirsin.
 - **Silme**: Profil → Hesap → Hesabı Sil. Talep tarihinden itibaren 30 gün içinde tüm verilerin sunucularımızdan kalıcı silinir.
 - **Düzeltme**: Bebek bilgilerini uygulama içinden düzenleyebilirsin.
-- **Reddetme**: Reklam takibi için iOS'un App Tracking Transparency (ATT) izni sorulur, reddedersen reklam takibi yapılmaz.
+- **Yapay zeka onayı**: "Lumoo'ya Sor" özelliğini kullanmadan önce uygulama içinde bir izin ekranı görürsün. Kabul etmezsen sadece bu özellik devre dışı kalır; uygulamanın diğer bölümleri çalışmaya devam eder.
 
 ## Veri saklama süreleri
 
@@ -78,7 +95,7 @@ Veri sorumlusu: Barış Fidan, Türkiye
 
 # Lumoo Privacy Policy (English)
 
-**Last updated: May 3, 2026**
+**Last updated: May 11, 2026**
 
 This privacy policy explains what data Lumoo collects, how we use it, and your rights.
 
@@ -86,6 +103,7 @@ This privacy policy explains what data Lumoo collects, how we use it, and your r
 
 ### Account information
 - **Email address**: for signup and login, stored linked to your user identity on our server.
+- **Password**: irreversibly hashed via bcrypt. Plain text is never stored.
 
 ### Health and baby information
 - Baby's name, birthdate, gender, birth weight, mother's name, mascot preference
@@ -95,33 +113,49 @@ This privacy policy explains what data Lumoo collects, how we use it, and your r
 - Growth measurements (height, weight, head circumference)
 - Baby check-up notes
 
-This data is encrypted on your device with **AES-256-GCM**. If cloud backup is enabled, it is backed up to our servers in the same encrypted form.
+This data is encrypted on your device with **AES-256-GCM**. Baby profile fields that travel to our server are additionally encrypted with AES-256-GCM server-side.
 
-### User content
-- Messages you write in Ask Lumoo (AI chat) — sent to our server, forwarded to Anthropic Claude API for AI response, result returned to you. Your written content is not used for AI training.
+### User content (Ask Lumoo — AI chat)
+The text of the messages you write in the "Ask Lumoo" tab is sent to our server and then forwarded to **Anthropic, PBC** (Claude API) for AI response generation.
 
-### Device identifier
-- The ad SDK (Google AdMob) collects a device identifier to serve ads. Applies only to free-tier users; Premium subscribers do not share this data.
+**Sent:** Only the text of your message.
+
+**Not sent:** Your name, email, baby profile (name, birthdate, weight, etc.), feeding / pumping records, device identifier (IDFA/IDFV), location.
+
+**Consent:** The first time you use this feature, you see an in-app consent screen. No message is sent without your explicit acceptance. Declining only disables this feature; the rest of the app continues to work.
+
+**Data lifecycle:** Anthropic does not use API inputs to train models by default, and deletes them within 30 days.
+
+### Advertising (free tier only)
+Lumoo does **not use a device identifier (IDFA)** for ad serving. All AdMob ad requests are made as **non-personalized**:
+
+- No behavioral targeting
+- No user profile is built
+- No cross-app tracking
+- The iOS App Tracking Transparency (ATT) prompt is **not shown** because no tracking takes place
+
+Google only receives basic technical info (approximate location, device language, ad slot ID). Premium subscribers see no ads at all.
 
 ### Purchase history
-- Status of your Premium subscription (active/canceled/renewal date). Obtained via Apple App Store and RevenueCat.
+- Status of your Premium subscription (active / canceled / renewal date). Obtained via Apple App Store and RevenueCat. Your Apple ID and card details are **never sent to Lumoo**.
 
 ## How we use your data
 
-- **App functionality**: Continuing baby care tracking, personalizing AI responses, managing your subscription.
-- **Advertising (free tier only)**: Device identifier used for ad serving via AdMob.
+- **App functionality**: Continuing baby care tracking, generating Ask Lumoo (AI chat) responses, managing your subscription.
+- **Advertising (free tier only)**: Non-personalized ad serving via AdMob.
 - **Legal compliance**: Responding to legal requests with the minimum data required.
 
 ## Sharing with third parties
 
-We **never** share or sell your health or account data with third parties.
+We **never** share or sell your health or account data with advertising partners or data brokers.
 
-Services used for processing:
-- **Anthropic** (Claude API): Ask Lumoo messages are processed for AI response; not used for training.
-- **Apple StoreKit**: payment is handled by Apple; we do not see payment details.
-- **RevenueCat**: subscription status management.
-- **Google AdMob** (free tier only): ad serving.
-- **DigitalOcean**: server infrastructure.
+The third-party services below are used. Each provides **equivalent data-protection guarantees** to Lumoo's standards under its own privacy policy:
+
+- **Anthropic, PBC** (Claude API): Ask Lumoo message text is processed for AI responses. Not used for training, deleted within 30 days. [Privacy Policy](https://www.anthropic.com/legal/privacy)
+- **Apple StoreKit**: Payment is handled by Apple; we do not see card details. [Apple Privacy](https://www.apple.com/privacy/)
+- **RevenueCat**: Subscription status management. [RevenueCat Privacy](https://www.revenuecat.com/privacy/)
+- **Google AdMob** (free tier only): Non-personalized ad serving. [AdMob Privacy](https://policies.google.com/technologies/partner-sites)
+- **DigitalOcean**: Server infrastructure (EU/US data centers). [DigitalOcean Privacy](https://www.digitalocean.com/legal/privacy-policy)
 
 ## Your rights
 
@@ -130,7 +164,7 @@ GDPR and KVKK compliant:
 - **Access and export**: Profile → Export Data downloads all your data as a PDF.
 - **Deletion**: Profile → Account → Delete Account. All data permanently deleted from our servers within 30 days of request.
 - **Correction**: Edit baby info within the app.
-- **Refusal**: iOS App Tracking Transparency (ATT) prompt for ad tracking; if you decline, ad tracking is disabled.
+- **AI consent**: Before using "Ask Lumoo", an in-app consent screen is shown. If you decline, only this feature is disabled; the rest of the app continues to work.
 
 ## Data retention
 
@@ -148,6 +182,6 @@ We may update this policy occasionally. For significant changes, we'll notify yo
 
 ## Contact
 
-Questions and data requests: **support@lumoo.app**
+Questions and data requests: **barisfidann3@gmail.com**
 
 Data controller: Barış Fidan, Turkey
